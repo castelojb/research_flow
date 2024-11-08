@@ -15,3 +15,5 @@ Real: TypeAlias = list[float]
 InType = TypeVar("InType")
 
 OutType = TypeVar("OutType")
+
+Score = TypeVar("Score")
