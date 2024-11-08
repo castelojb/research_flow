@@ -24,7 +24,7 @@ class ModelInstance(metaclass=ModelInstanceMeta):
         yield cls.validate
 
     @classmethod
-    def validate(cls, value):
+    def validate(cls, value, p):
         if isinstance(value, cls.__BaseClass__):
             return value
 
