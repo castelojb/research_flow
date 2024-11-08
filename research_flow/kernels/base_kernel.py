@@ -1,13 +1,15 @@
-from abc import ABC, abstractmethod, abstractproperty
+from abc import ABC, abstractmethod
 from typing import Generic
 
-from gloe import Transformer, transformer
+from gloe import Transformer
 from pydantic import BaseModel
 
 from research_flow.types.comon_types import InType, OutType
 
 
-class BaseKernel(BaseModel, Generic[InType, OutType], Transformer[InType, OutType], ABC):
+class BaseKernel(
+    BaseModel, Generic[InType, OutType], Transformer[InType, OutType], ABC
+):
 
     @property
     @abstractmethod

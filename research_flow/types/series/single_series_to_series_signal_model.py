@@ -1,6 +1,8 @@
 import pydantic
 
-from research_flow.types.series.single_series_to_series_model import SingleSeriesToSeriesModel
+from research_flow.types.series.single_series_to_series_model import (
+    SingleSeriesToSeriesModel,
+)
 
 
 class SingleSeriesToSeriesSignalModel(SingleSeriesToSeriesModel):

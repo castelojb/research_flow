@@ -1,4 +1,6 @@
-from research_flow.types.series.multiple_series_to_series_model import MultipleSeriesToSeriesModel
+from research_flow.types.series.multiple_series_to_series_model import (
+    MultipleSeriesToSeriesModel,
+)
 
 
 class MachineLearningDataModel(MultipleSeriesToSeriesModel):

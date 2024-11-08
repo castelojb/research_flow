@@ -11,6 +11,7 @@ from research_flow.types.metrics.metric_score_model import MetricScoreModel
 
 class MetricBaseModel(BaseModel, Generic[DataType], ABC):
     model_config = ConfigDict(arbitrary_types_allowed=True)
+
     # metric_name: str
     # metric: AsyncTransformer[tuple[PatientIdx, DataType], list[MetricScoreModel]]
 
@@ -20,6 +21,6 @@ class MetricBaseModel(BaseModel, Generic[DataType], ABC):
 
     @abstractmethod
     def get_metric(
-        self,
+            self,
     ) -> AsyncTransformer[tuple[PatientIdx, DataType], list[MetricScoreModel]]:
         pass
