@@ -14,13 +14,13 @@ class Scaler(BaseModel, ABC):
 
     @abstractmethod
     def transform(
-            self, x: list[float] | list[list[float]]
+        self, x: list[float] | list[list[float]]
     ) -> list[float] | list[list[float]]:
         pass
 
     @abstractmethod
     def inverse_transform(
-            self, x: list[float] | list[list[float]]
+        self, x: list[float] | list[list[float]]
     ) -> list[float] | list[list[float]]:
         pass
 
@@ -30,13 +30,13 @@ class Scaler(BaseModel, ABC):
 
     @staticmethod
     def resolve_type(
-            x: list[float] | list[list[float]],
+        x: list[float] | list[list[float]],
     ) -> Optional[str]:
         if isinstance(x, list):
             if all(isinstance(i, float) for i in x):
                 return Scaler.FLATTEN_LIST
             elif all(
-                    isinstance(i, list) and all(isinstance(j, float) for j in i) for i in x
+                isinstance(i, list) and all(isinstance(j, float) for j in i) for i in x
             ):
                 return Scaler.MATRICE
         return None

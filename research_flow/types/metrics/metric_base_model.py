@@ -21,6 +21,6 @@ class MetricBaseModel(BaseModel, Generic[DataType], ABC):
 
     @abstractmethod
     def get_metric(
-            self,
+        self,
     ) -> AsyncTransformer[tuple[PatientIdx, DataType], list[MetricScoreModel]]:
         pass

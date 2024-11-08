@@ -25,11 +25,11 @@ class MachineLearningAlgorithm(
 
     @abstractmethod
     def fit(
-            self,
-            data: DataType,
-            train_config: TrainConfigBaseModel,
-            model_config: ModelConfig,
-            val_data: Optional[DataType] = None,
+        self,
+        data: DataType,
+        train_config: TrainConfigBaseModel,
+        model_config: ModelConfig,
+        val_data: Optional[DataType] = None,
     ) -> "MachineLearningAlgorithm":
         pass
 
@@ -39,10 +39,10 @@ class MachineLearningAlgorithm(
 
     @abstractmethod
     def tune_model_parameters(
-            self,
-            data: DataType,
-            val_data: DataType,
-            hpo_config: HPOConfigBaseModel[ModelConfig],
+        self,
+        data: DataType,
+        val_data: DataType,
+        hpo_config: HPOConfigBaseModel[ModelConfig],
     ) -> ModelConfig:
         pass
 
