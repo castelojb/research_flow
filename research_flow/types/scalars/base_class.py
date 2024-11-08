@@ -9,23 +9,23 @@ class Scaler(BaseModel, ABC):
     MATRICE: ClassVar[str] = "list[list[float]]"
 
     @abstractmethod
-    async def fit(self, x: list[float] | list[list[float]]):
+    def fit(self, x: list[float] | list[list[float]]):
         pass
 
     @abstractmethod
-    async def transform(
+    def transform(
         self, x: list[float] | list[list[float]]
     ) -> list[float] | list[list[float]]:
         pass
 
     @abstractmethod
-    async def inverse_transform(
+    def inverse_transform(
         self, x: list[float] | list[list[float]]
     ) -> list[float] | list[list[float]]:
         pass
 
     @abstractmethod
-    async def copy_empty_like(self) -> "Scaler":
+    def copy_empty_like(self) -> "Scaler":
         pass
 
     @staticmethod

@@ -12,8 +12,8 @@ class MinMaxScalerModel(Scaler):
     min_value: float | None = None
     max_value: float | None = None
 
-    async def fit(self, x: list[float] | list[list[float]]):
-        entry_type = await self.resolve_type(x)
+    def fit(self, x: list[float] | list[list[float]]):
+        entry_type = self.resolve_type(x)
 
         if entry_type == self.FLATTEN_LIST:
             self.min_value = min(x)  # type: ignore
@@ -24,7 +24,7 @@ class MinMaxScalerModel(Scaler):
             self.min_value = min(flatten)
             self.max_value = max(flatten)
 
-    async def transform(
+    def transform(
         self, x: list[float] | list[list[float]]
     ) -> list[float] | list[list[float]]:
         x_array = np.array(x)
@@ -34,7 +34,7 @@ class MinMaxScalerModel(Scaler):
 
         return x_scaled.tolist()
 
-    async def inverse_transform(
+    def inverse_transform(
         self, x_scaled: list[float] | list[list[float]]
     ) -> list[float] | list[list[float]]:
         x_scaled_array = np.array(x_scaled)
@@ -46,7 +46,7 @@ class MinMaxScalerModel(Scaler):
 
         return x.tolist()
 
-    async def copy_empty_like(self) -> "MinMaxScalerModel":
+    def copy_empty_like(self) -> "MinMaxScalerModel":
         return MinMaxScalerModel(
             min_feature=self.min_feature, max_feature=self.max_feature
         )
