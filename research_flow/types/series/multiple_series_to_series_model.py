@@ -14,7 +14,6 @@ class MultipleSeriesToSeriesModel(BaseModel):
         :param v: Pass the values of the output_series to check_lengths
         :param values: Pass the values of other parameters to this function
         :return: A value
-        :doc-author: Trelent
         """
         if "input_series" in values.data and len(v) != len(values.data["input_series"]):
             raise ValueError("input_series and output_series must have the same length")
