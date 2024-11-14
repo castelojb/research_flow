@@ -20,3 +20,7 @@ class HPOConfigBaseModel(BaseModel, Generic[ModelConfig]):
     """
 
     pass
+
+
+class HPOStudy(BaseModel):
+    pass

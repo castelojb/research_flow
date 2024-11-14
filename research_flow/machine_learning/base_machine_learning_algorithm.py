@@ -2,11 +2,16 @@ from abc import ABC, abstractmethod
 from typing import Generic, Optional, TypeVar
 
 from gloe import Transformer
-from optuna import Study
 from pydantic import BaseModel, ConfigDict
 
+from build.lib.research_flow.types.pydantic_utils.subclass_type_resolution import (
+    ModelInstance,
+)
 from research_flow.types.comon_types import ModelType, ModelConfig
-from research_flow.types.configs.hpo_config_base_model import HPOConfigBaseModel
+from research_flow.types.configs.hpo_config_base_model import (
+    HPOConfigBaseModel,
+    HPOStudy,
+)
 from research_flow.types.configs.train_config_base_model import TrainConfigBaseModel
 from research_flow.types.machine_learning.machine_learning_data_model import (
     MachineLearningDataModel,
@@ -21,7 +26,7 @@ class MachineLearningAlgorithm(
     model_config = ConfigDict(arbitrary_types_allowed=True)
     alg_factory: Transformer[ModelConfig, ModelType]
     alg_trained: Optional[ModelType] = None
-    last_study: Optional[Study] = None
+    last_study: Optional[ModelInstance[HPOStudy]] = None
 
     @abstractmethod
     def fit(
