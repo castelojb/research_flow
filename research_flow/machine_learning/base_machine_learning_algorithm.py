@@ -4,9 +4,6 @@ from typing import Generic, Optional, TypeVar
 from gloe import Transformer
 from pydantic import BaseModel, ConfigDict
 
-from build.lib.research_flow.types.pydantic_utils.subclass_type_resolution import (
-    ModelInstance,
-)
 from research_flow.types.comon_types import ModelType, ModelConfig
 from research_flow.types.configs.hpo_config_base_model import (
     HPOConfigBaseModel,
@@ -16,6 +13,7 @@ from research_flow.types.configs.train_config_base_model import TrainConfigBaseM
 from research_flow.types.machine_learning.machine_learning_data_model import (
     MachineLearningDataModel,
 )
+from research_flow.types.pydantic_utils.subclass_type_resolution import ModelInstance
 
 DataType = TypeVar("DataType", bound=MachineLearningDataModel)
 
