@@ -79,24 +79,24 @@ Each `Kernel` wraps a specific phase of the pipeline, composing its internal ste
 
 ```python
 # Data Processing Kernel
-class DataProcessingKernel(BaseKernel[Path, ProcessedData]):
+class DataProcessingKernel(BaseKernel[Path, NormalizedData]):
     read_data: Transformer[Path, RawData]
     clean_data: Transformer[RawData, CleanData]
     normalize_data: Transformer[CleanData, NormalizedData]
 
     @property
-    def pipeline_graph(self) -> Transformer[Path, ProcessedData]:
+    def pipeline_graph(self) -> Transformer[Path, NormalizedData]:
         return self.read_data >> self.clean_data >> self.normalize_data
 ```
 
 ```python
 # Model Training Kernel
-class ModelTrainingKernel(BaseKernel[ProcessedData, TrainedModel]):
-    split_data: Transformer[ProcessedData, TrainTestSplit]
+class ModelTrainingKernel(BaseKernel[NormalizedData, TrainedModel]):
+    split_data: Transformer[NormalizedData, TrainTestSplit]
     train_model: Transformer[TrainTestSplit, TrainedModel]
 
     @property
-    def pipeline_graph(self) -> Transformer[ProcessedData, TrainedModel]:
+    def pipeline_graph(self) -> Transformer[NormalizedData, TrainedModel]:
         return self.split_data >> self.train_model
 ```
 
@@ -141,14 +141,14 @@ def new_preprocessing_step(data: CleanData) -> NewProcessedData:
     pass
 
 # Update the DataProcessingKernel to include the new step
-class DataProcessingKernel(BaseKernel[Path, ProcessedData]):
+class DataProcessingKernel(BaseKernel[Path, NormalizedData]):
     read_data: Transformer[Path, RawData]
     clean_data: Transformer[RawData, CleanData]
     new_preprocessing_step: Transformer[CleanData, NewProcessedData]
     normalize_data: Transformer[NewProcessedData, NormalizedData]
 
     @property
-    def pipeline_graph(self) -> Transformer[Path, ProcessedData]:
+    def pipeline_graph(self) -> Transformer[Path, NormalizedData]:
         return self.read_data >> self.clean_data >> self.new_preprocessing_step >> self.normalize_data
 ```
 
@@ -162,13 +162,13 @@ We start by defining a new kernel for feature selection:
 
 ```python
 # Feature Selection Kernel
-class FeatureSelectionKernel(BaseKernel[ProcessedData, SelectedFeatures]):
-    check_variance: Transformer[ProcessedData, VarianceCheckedData]
+class FeatureSelectionKernel(BaseKernel[NormalizedData, SelectedFeatures]):
+    check_variance: Transformer[NormalizedData, VarianceCheckedData]
     filter_by_correlation: Transformer[VarianceCheckedData, CorrelationFilteredData]
     select_features: Transformer[CorrelationFilteredData, SelectedFeatures]
 
     @property
-    def pipeline_graph(self) -> Transformer[ProcessedData, SelectedFeatures]:
+    def pipeline_graph(self) -> Transformer[NormalizedData, SelectedFeatures]:
         return self.check_variance >> self.filter_by_correlation >> self.select_features
 ```
 
@@ -227,11 +227,13 @@ After defining your kernels and transformers, you can generate a visual represen
 ```python
 [...]
 
-data_processor = DataProcessingKernel(...)
+data_processor = DataProcessingKernel(...)  # supply step transformers implementations
+feature_selector = FeatureSelectionKernel(...)
 model_trainer = ModelTrainingKernel(...)
 evaluator = EvaluationKernel(...)
 
-experiment_pipeline = data_processor >> model_trainer >> evaluator
+# Combine the kernels into a full experiment pipeline
+experiment_pipeline = data_processor >> feature_selector >> model_trainer >> evaluator
 
 # Generate visual representation of the workflow
 experiment_pipeline.pipeline_graph.to_image("./experiment_workflow.png")
