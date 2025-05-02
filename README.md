@@ -31,7 +31,8 @@ Research Flow is a Python library designed to help researchers and practitioners
 - **Image Flow Visualization**: Generate visual workflows directly from your code, making it easier to understand the flow and dependencies of your experiments with seamless `documentation`.
 - **Extensibility in heart**: With the Kernel Chain pattern, `easily integrate` new methodologies and data into existing experiments.
 - **Strong Type Safety**: Leverage [Pydantic](https://pydantic-docs.helpmanual.io/) and [Gloe](https://github.com/ideos/gloe)'s type system to ensure that data flows correctly through your pipeline, catching potential type inconsistencies early in the development process.
-- **Domain and Technology Agnostic**: Research Flow is designed to be flexible and adaptable, allowing you to use it with any machine learning framework or library, such as [PyTorch](https://pytorch.org/), [TensorFlow](https://www.tensorflow.org/), or [scikit-learn](https://scikit-learn.org/).
+- **Domain and Technology Agnostic**: The generic nature of the library allows it to be used across various domains and technologies. It is designed to be flexible and adaptable, allowing you to use it with any machine learning framework or library, such as [PyTorch](https://pytorch.org/), [TensorFlow](https://www.tensorflow.org/), or [scikit-learn](https://scikit-learn.org/), and any other technology. This means you can easily integrate it into your existing projects and workflows, regardless of the tools you are using.
+- **Lightweight**: Built entirely in Python, Research Flow introduces no additional dependencies, ensuring a lightweight and efficient solution.transformer
 
 ### 📦 Installation
 
@@ -74,7 +75,7 @@ Imagine a typical machine learning research pipeline involving data loading, pre
 
 ### 🔧 Defining Kernels
 
-Each `Kernel` wraps a specific phase of the pipeline, composing its internal steps using `Transformer`s and a declarative `graph`.
+Each `Kernel` wraps a specific phase of the pipeline, composing its internal steps using `Transformers` and a declarative `graph`.
 
 ```python
 # Data Processing Kernel
@@ -151,26 +152,65 @@ class DataProcessingKernel(BaseKernel[Path, ProcessedData]):
         return self.read_data >> self.clean_data >> self.new_preprocessing_step >> self.normalize_data
 ```
 
-Then suppose that now you want to save the model after training as a pickle file. You can easily add a new `Transformer` to the `ModelTrainingKernel`:
+Note that the new step is added to the pipeline without affecting the existing structure. This modularity allows for rapid experimentation and iteration.
+
+### Extend the experiment
+
+Now lets suppose you want to add a feature selection step to your experiment. Since it is a step of the experiment itself we create a new kernel that will be responsible for this step.
+
+We start by defining a new kernel for feature selection:
 
 ```python
-# New Transformer to save the model
-@transformer
-def save_model(model: TrainedModel) -> TrainedModel:
-    with open("model.pkl", "wb") as f:
-        pickle.dump(model, f)
-    return model
-
-# Update the ModelTrainingKernel to include the new step
-class ModelTrainingKernel(BaseKernel[ProcessedData, TrainedModel]):
-    split_data: Transformer[ProcessedData, TrainTestSplit]
-    train_model: Transformer[TrainTestSplit, TrainedModel]
-    save_model: Transformer[TrainedModel, TrainedModel]
+# Feature Selection Kernel
+class FeatureSelectionKernel(BaseKernel[ProcessedData, SelectedFeatures]):
+    check_variance: Transformer[ProcessedData, VarianceCheckedData]
+    filter_by_correlation: Transformer[VarianceCheckedData, CorrelationFilteredData]
+    select_features: Transformer[CorrelationFilteredData, SelectedFeatures]
 
     @property
-    def pipeline_graph(self) -> Transformer[ProcessedData, TrainedModel]:
-        return self.split_data >> self.train_model >> self.save_model
+    def pipeline_graph(self) -> Transformer[ProcessedData, SelectedFeatures]:
+        return self.check_variance >> self.filter_by_correlation >> self.select_features
 ```
+
+Since the reserach flow is **strongly typed** if you chain the `FeatureSelectionKernel` with the `ModelTrainingKernel`  the types of the inputs and outputs will be checked at runtime. This means that if you try to pass the wrong type to the `ModelTrainingKernel` it will raise an error. So we need to update the `ModelTrainingKernel` to accept the output of the `FeatureSelectionKernel` as input. We will also need to update the `split_data` transformer to accept the `SelectedFeatures` as input.
+
+❗ Note that it is not only easy to add new steps to the experiment but it is also safe. The types of the inputs and outputs are checked at runtime, so if you try to pass the wrong type to the `ModelTrainingKernel` it will raise an error.
+
+
+```python
+# Model Training Kernel
+class ModelTrainingKernel(BaseKernel[SelectedFeatures, TrainedModel]): # update input type
+    split_data: Transformer[SelectedFeatures, TrainTestSplit] # update input type
+    train_model: Transformer[TrainTestSplit, TrainedModel]
+
+    @property
+    def pipeline_graph(self) -> Transformer[SelectedFeatures, TrainedModel]:
+        return self.split_data >> self.train_model
+```
+
+Now we can use the `FeatureSelectionKernel` in our experiment pipeline:
+
+```python
+data_processor = DataProcessingKernel(...)  # supply step transformers implementations
+feature_selector = FeatureSelectionKernel(...)
+model_trainer = ModelTrainingKernel(...)
+evaluator = EvaluationKernel(...)
+
+# Combine the kernels into a full experiment pipeline
+experiment_pipeline = data_processor >> feature_selector >> model_trainer >> evaluator
+
+# Execute the pipeline with the input data path
+results = experiment_pipeline("path/to/your/data")
+```
+
+See how easy it is to add a new step to the experiment? You just need to create a new kernel and add it to the pipeline.
+Making it easy to add new steps to the experiment without affecting the existing structure.
+
+### 🔄 Reproducibility and Collaboration
+
+By using Research Flow, you can ensure that your experiments are reproducible and easy to share with collaborators. The modular design allows you to encapsulate each step of your experiment, making it easy to understand and modify.
+
+With the clear separation of concerns and the modular design, other researchers can easily understand your workflow, replicate your results or even extend your reuse parts of your code for their own experiments. This fosters collaboration and accelerates the pace of research make it easier to share your work with others.
 
 ### ✅ Benefits of This Structure
 
@@ -200,7 +240,6 @@ experiment_pipeline.pipeline_graph.to_image("./experiment_workflow.png")
 <p align="center">
     <img src="./docs/extended-example.png" alt="Experiment Workflow" width="250" height/>
 </p>
-
 
 As you can see, the visual representation clearly outlines the flow of data and the relationships between different components in your experiment.
 
