@@ -1,1 +1,222 @@
-# research_flow
+<p align="center">
+  <img src="./docs/logo.png" alt="Logo" width="400"/>
+</p>
+
+<p align="center">
+  <a href="https://www.python.org/">
+    <img src="https://img.shields.io/badge/python-3.10%2B-brightgreen.svg" alt="Python 3.10+"/>
+  </a>
+  <a href="https://www.apache.org/licenses/LICENSE-2.0">
+    <img src="https://img.shields.io/badge/license-Apache%202.0-blue.svg" alt="License Apache 2.0"/>
+  </a>
+  <a href="https://github.com/ideos/gloe">
+    <img src="https://img.shields.io/badge/Gloe-gray?logo=data:image/png;base64,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&style=flat-square" alt="Gloe"/>
+  </a>
+</p>
+
+---
+
+## Your experiment structured, collaborative and future-proof endeavors
+
+### Empower your machine learning research with a seamless, extensible and reproducible workflow architecture
+
+Research Flow is a Python library designed to help researchers and practitioners in the field of machine learning and data science to structure their experiments in a modular, extensible, and reproducible manner. By leveraging the Kernel Chain architectural pattern, Research Flow provides a clear and organized way to define, execute, and visualize complex machine learning workflows.
+
+---
+
+## Key Features
+
+- **Modular Design**: Break down complex experiments into manageable components,such as kernels and transformers, enhancing `readability` and `maintainability`.
+- **Reproducibility Ready**: Ensure that your experiments can be easily reproduced by others, fostering `collaboration` and knowledge sharing.
+- **Image Flow Visualization**: Generate visual workflows directly from your code, making it easier to understand the flow and dependencies of your experiments with seamless `documentation`.
+- **Extensibility in heart**: With the Kernel Chain pattern, `easily integrate` new methodologies and data into existing experiments.
+- **Strong Type Safety**: Leverage [Pydantic](https://pydantic-docs.helpmanual.io/) and [Gloe](https://github.com/ideos/gloe)'s type system to ensure that data flows correctly through your pipeline, catching potential type inconsistencies early in the development process.
+- **Domain and Technology Agnostic**: Research Flow is designed to be flexible and adaptable, allowing you to use it with any machine learning framework or library, such as [PyTorch](https://pytorch.org/), [TensorFlow](https://www.tensorflow.org/), or [scikit-learn](https://scikit-learn.org/).
+
+### 📦 Installation
+
+Requirements:
+
+- Python 3.10 or higher
+
+To install `Research Flow`, you can use pip:
+
+```bash
+pip install git+https://github.com/castelojb/research_flow.git 
+```
+
+## Philosophy and Motivation
+
+With the explosion of machine learning research, the need for a structured and reproducible workflow has never been more critical. Research Flow is designed to address this challenge by providing a robust framework that enhances the organization, the code documentation and the clarity of your experiments.
+
+Research Flow is built on the principles of the Kernel Chain pattern, which emphasizes the importance of modularity and reusability in machine learning code. This approach allows researchers to break down complex experiments into manageable components, making it easier to understand, modify, and extend their work.
+
+<!-- The library is designed to be user-friendly, with a focus on simplicity and ease of use. It provides a clear and intuitive interface for defining and executing experiments, allowing researchers to focus on their work rather than getting bogged down in the details of implementation. -->
+
+---
+
+## Architecture
+
+Research Flow is built around the proposed Kernel Chain architectural pattern. This pattern leverages the strengths of the pipe-and-filter architecture, which is natural for the sequential steps common in ML experiments.
+
+In the Kernel Chain pattern, an ML experiment is modeled as a chain of Kernel objects. Each Kernel represents a semantically grouped set of steps within the experiment, such as data processing, model training, or evaluation. Kernels contain attributes that are connectable components (flows or transformers) and have a defined method (graph property) that specifies the main organization and execution logic of these components as a flow
+
+The core idea is that the logic of execution is expressed directly through the arrangement and ordering of these steps within the code. Each component within a Kernel, and the Kernel itself, has well-defined input and output types
+
+<!-- TODO -->
+Next section havepolished and professional format for the **Example** section of a GitHub README, tailored to showcase your conceptual use case clearly and concisely
+
+---
+
+## 📘 Example: Conceptual ML Pipeline Using Kernel Chain
+
+Imagine a typical machine learning research pipeline involving data loading, preprocessing, model training, and evaluation. Using **Research Flow's Kernel Chain** pattern, each major stage can be encapsulated into a modular and composable `Kernel`, enabling high-level orchestration with low-level flexibility.
+
+### 🔧 Defining Kernels
+
+Each `Kernel` wraps a specific phase of the pipeline, composing its internal steps using `Transformer`s and a declarative `graph`.
+
+```python
+# Data Processing Kernel
+class DataProcessingKernel(BaseKernel[Path, ProcessedData]):
+    read_data: Transformer[Path, RawData]
+    clean_data: Transformer[RawData, CleanData]
+    normalize_data: Transformer[CleanData, NormalizedData]
+
+    @property
+    def pipeline_graph(self) -> Transformer[Path, ProcessedData]:
+        return self.read_data >> self.clean_data >> self.normalize_data
+```
+
+```python
+# Model Training Kernel
+class ModelTrainingKernel(BaseKernel[ProcessedData, TrainedModel]):
+    split_data: Transformer[ProcessedData, TrainTestSplit]
+    train_model: Transformer[TrainTestSplit, TrainedModel]
+
+    @property
+    def pipeline_graph(self) -> Transformer[ProcessedData, TrainedModel]:
+        return self.split_data >> self.train_model
+```
+
+```python
+# Evaluation Kernel
+class EvaluationKernel(BaseKernel[TrainedModel, EvaluationResults]):
+    predict: Transformer[TrainedModel, Predictions]
+    calculate_metrics: Transformer[Predictions, EvaluationResults]
+
+    @property
+    def pipeline_graph(self) -> Transformer[TrainedModel, EvaluationResults]:
+        return self.predict >> self.calculate_metrics
+```
+
+### 🧪 Building and Running the Pipeline
+
+With implementations provided for each `Transformer`, we instantiate and chain the kernels:
+
+```python
+data_processor = DataProcessingKernel(...)  # supply step transformers implementations
+model_trainer = ModelTrainingKernel(...)
+evaluator = EvaluationKernel(...)
+
+# Seamless Combine the kernels into a full experiment pipeline
+experiment_pipeline = data_processor >> model_trainer >> evaluator
+
+# Execute the pipeline with the input data path
+results = experiment_pipeline("path/to/your/data")
+```
+
+---
+
+### Extending the Pipeline
+
+Now imagine you want to add a new preprocessing step or a different evaluation metric. With Research Flow, you can easily extend your pipeline by creating new `Transformers` or modifying existing ones without needing to overhaul the entire structure.
+
+```python
+# New Preprocessing Step
+@transformer
+def new_preprocessing_step(data: CleanData) -> NewProcessedData:
+    # Implement your new preprocessing logic here
+    pass
+
+# Update the DataProcessingKernel to include the new step
+class DataProcessingKernel(BaseKernel[Path, ProcessedData]):
+    read_data: Transformer[Path, RawData]
+    clean_data: Transformer[RawData, CleanData]
+    new_preprocessing_step: Transformer[CleanData, NewProcessedData]
+    normalize_data: Transformer[NewProcessedData, NormalizedData]
+
+    @property
+    def pipeline_graph(self) -> Transformer[Path, ProcessedData]:
+        return self.read_data >> self.clean_data >> self.new_preprocessing_step >> self.normalize_data
+```
+
+Then suppose that now you want to save the model after training as a pickle file. You can easily add a new `Transformer` to the `ModelTrainingKernel`:
+
+```python
+# New Transformer to save the model
+@transformer
+def save_model(model: TrainedModel) -> TrainedModel:
+    with open("model.pkl", "wb") as f:
+        pickle.dump(model, f)
+    return model
+
+# Update the ModelTrainingKernel to include the new step
+class ModelTrainingKernel(BaseKernel[ProcessedData, TrainedModel]):
+    split_data: Transformer[ProcessedData, TrainTestSplit]
+    train_model: Transformer[TrainTestSplit, TrainedModel]
+    save_model: Transformer[TrainedModel, TrainedModel]
+
+    @property
+    def pipeline_graph(self) -> Transformer[ProcessedData, TrainedModel]:
+        return self.split_data >> self.train_model >> self.save_model
+```
+
+### ✅ Benefits of This Structure
+
+- **Modular:** Replace or reconfigure individual steps (e.g., `clean_data`, `train_model`) without impacting the rest of the pipeline.
+- **Readable:** The overall experiment structure is explicit and easy to reason about.
+- **Maintainable:** Clearly defined interfaces between stages promote cleaner experimentation and faster iteration.
+- **Reusable:** Kernels and transformers can be reused across different experiments.
+- **Extensible:** New steps can be added with minimal effort, allowing for rapid experimentation with different methodologies.
+
+### 📊 Visual Workflow Generation
+
+After defining your kernels and transformers, you can generate a visual representation of your workflow. This is particularly useful for documentation and sharing your research process with collaborators.
+
+```python
+[...]
+
+data_processor = DataProcessingKernel(...)
+model_trainer = ModelTrainingKernel(...)
+evaluator = EvaluationKernel(...)
+
+experiment_pipeline = data_processor >> model_trainer >> evaluator
+
+# Generate visual representation of the workflow
+experiment_pipeline.pipeline_graph.to_image("./experiment_workflow.png")
+```
+
+<p align="center">
+    <img src="./docs/example.png" alt="Experiment Workflow" width="250" height/>
+</p>
+
+
+As you can see, the visual representation clearly outlines the flow of data and the relationships between different components in your experiment.
+
+<!-- ### 🔗 Documentation
+
+For more detailed information on how to use Research Flow, including installation instructions, API references, and advanced usage examples, please refer to the Documentation -->
+
+### 🛠️ Contributing
+
+We welcome contributions to Research Flow! If you have ideas for new features, improvements, or bug fixes, please open an issue or submit a pull request on GitHub.
+
+### 📜 License
+
+This project is licensed under the Apache License 2.0. See the [LICENSE](LICENSE) file for details.
+
+<!-- Research Flow provides a standardized architecture that simplifies the process of structuring machine learning experiments. By adopting the Kernel Chain pattern, it ensures that your code is not only more readable and maintainable but also highly extensible. This allows researchers to easily reproduce experiments, collaborate effectively, and build upon existing work without the need for significant refactoring.
+
+With Research Flow, your experiments become future-proof, enabling seamless integration of new methodologies and data. The library also supports the generation of visual workflows directly from your code, enhancing transparency and making it easier to communicate your research process. Built entirely in Python, Research Flow introduces no additional dependencies, ensuring a lightweight and efficient solution.
+ -->
