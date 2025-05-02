@@ -198,7 +198,7 @@ experiment_pipeline.pipeline_graph.to_image("./experiment_workflow.png")
 ```
 
 <p align="center">
-    <img src="./docs/example.png" alt="Experiment Workflow" width="250" height/>
+    <img src="./docs/extended-example.png" alt="Experiment Workflow" width="250" height/>
 </p>
 
 
