@@ -171,7 +171,7 @@ class FeatureSelectionKernel(BaseKernel[NormalizedData, SelectedFeatures]):
 
 Since the reserach flow is **strongly typed** if you chain the `FeatureSelectionKernel` with the `ModelTrainingKernel` without the correct types, it will raise an error. This is a powerful feature of the library that allows you to catch errors early in the development process.  So we need to update the `ModelTrainingKernel` to accept the output of the `FeatureSelectionKernel` as input. We will also need to update the `split_data` transformer to accept the `SelectedFeatures` as input.
 
-❗ Note: Adding new steps to the experiment is not only straightforward but also safe. Input and output types are verified at runtime, so if an incorrect type is passed to ModelTrainingKernel, an error will be raised immediately.
+❗ **Note**: Adding new steps to the experiment is not only straightforward but also safe. Input and output types are verified at runtime, so if an incorrect type is passed to ModelTrainingKernel, an error will be raised immediately.
 
 ```python
 # Model Training Kernel
@@ -184,7 +184,7 @@ class ModelTrainingKernel(BaseKernel[SelectedFeatures, TrainedModel]): # update 
         return self.split_data >> self.train_model
 ```
 
-⚠️ Atention: remember to update the transformer implementations to accept the new input types.
+⚠️ **Atention**: remember to update the transformer implementations to accept the new input types.
 
 Now we can use the `FeatureSelectionKernel` in our experiment pipeline:
 
@@ -247,9 +247,9 @@ As you can see, the visual representation clearly outlines the flow of data and 
 
 This will create an image file (`experiment_workflow.png`) that visually represents the entire experiment pipeline.
 
-❗ Note: The `to_image`  is a [`gloe.BaseTransformer`](https://gloe.ideos.com.br/api-reference/index.html#gloe.BaseTransformer) method, lookup their documentation for more details.
+❗ **Note**: The `to_image`  is a [`gloe.BaseTransformer`](https://gloe.ideos.com.br/api-reference/index.html#gloe.BaseTransformer) method, lookup their documentation for more details.
 
-⚠️ Atention: In order to run the `to_image` method you need to have the [`graphviz`](https://graphviz.org/download/) package installed on your system and install the [`pygraphviz`](https://pygraphviz.github.io/) Python package.
+⚠️ **Atention**: In order to run the `to_image` method you need to have the [`graphviz`](https://graphviz.org/download/) package installed on your system and install the [`pygraphviz`](https://pygraphviz.github.io/) Python package.
 
 <!-- ### 🔗 Documentation
 
