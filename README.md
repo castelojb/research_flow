@@ -52,8 +52,6 @@ With the explosion of machine learning research, the need for a structured and r
 
 Research Flow is built on the principles of the Kernel Chain pattern, which emphasizes the importance of modularity and reusability in machine learning code. This approach allows researchers to break down complex experiments into manageable components, making it easier to understand, modify, and extend their work.
 
-<!-- The library is designed to be user-friendly, with a focus on simplicity and ease of use. It provides a clear and intuitive interface for defining and executing experiments, allowing researchers to focus on their work rather than getting bogged down in the details of implementation. -->
-
 ---
 
 ## Architecture
@@ -63,9 +61,6 @@ Research Flow is built around the proposed Kernel Chain architectural pattern. T
 In the Kernel Chain pattern, an ML experiment is modeled as a chain of Kernel objects. Each Kernel represents a semantically grouped set of steps within the experiment, such as data processing, model training, or evaluation. Kernels contain attributes that are connectable components (flows or transformers) and have a defined method (`pipeline_graph` property) that specifies the main organization and execution logic of these components as a flow
 
 The core idea is that the logic of execution is expressed directly through the arrangement and ordering of these steps within the code. Each component within a Kernel, and the Kernel itself, has well-defined input and output types
-
-<!-- TODO -->
-Next section have a polished and professional format for the **Example** section of a GitHub README, tailored to showcase your conceptual use case clearly and concisely
 
 ---
 
@@ -249,6 +244,12 @@ experiment.pipeline_graph.to_image("./experiment_workflow.png")
 This is particularly useful for documentation and presentations, as it provides a clear overview of the experiment's structure and flow.
 
 As you can see, the visual representation clearly outlines the flow of data and the relationships between different components in your experiment.
+
+This will create an image file (`experiment_workflow.png`) that visually represents the entire experiment pipeline.
+
+❗ Note: The `to_image`  is a [`gloe.BaseTransformer`](https://gloe.ideos.com.br/api-reference/index.html#gloe.BaseTransformer) method, lookup their documentation for more details.
+
+⚠️ Atention: In order to run the `to_image` method you need to have the [`graphviz`](https://graphviz.org/download/) package installed on your system and install the [`pygraphviz`](https://pygraphviz.github.io/) Python package.
 
 <!-- ### 🔗 Documentation
 
