@@ -72,6 +72,10 @@ Imagine a typical machine learning research pipeline involving data loading, pre
 
 Each `Kernel` wraps a specific phase of the pipeline, composing its internal steps using `Transformers` and a declarative `pipeline_graph` property. This allows for a clear and organized structure, making it easy to understand the flow of data and the relationships between different components.
 
+A `Kernel` is a class that inherits from `BaseKernel`, which is a generic class that takes two type parameters: the input type and the output type. The `pipeline_graph` property is a method that returns a `Transformer` object that represents the flow of data through the kernel, the input and output types of the `Kernel`  should be the same as the input and output types of the  resulting `Transformer` of the `pipeline_graph` property.
+
+In the example below, we define three kernels: `DataProcessingKernel`, `ModelTrainingKernel`, and `EvaluationKernel`. Each kernel has its own set of transformers that define the steps involved in that phase of the pipeline.
+
 ```python
 # Data Processing Kernel
 class DataProcessingKernel(BaseKernel[Path, NormalizedData]):
@@ -106,9 +110,13 @@ class EvaluationKernel(BaseKernel[TrainedModel, EvaluationResults]):
         return self.predict >> self.calculate_metrics
 ```
 
+We use the `>>`right shift operator to chain the transformers together, creating a clear and readable flow of data through the pipeline. This operator is overloaded in the `BaseTransformer` class to allow for this syntax, the resulting `Transformer` of the `pipeline_graph` property is a `Transformer` object that represents the flow of data through the kernel.
+
 ### 🧪 Building and Running the Pipeline
 
-With implementations provided for each `Transformer`, we instantiate and chain the kernels:
+With implementations provided for each `Transformer`, we instantiate and chain the kernels and then chain them together using the `>>` operator. This creates a clear and readable flow of data through the pipeline, allowing you to easily understand how data moves from one step to the next.
+
+The resulting pipeline is the result of chaining the `pipeline_graph` properties of each kernel together. This creates a single `Transformer` object that represents the entire pipeline, which can be executed with a single call.
 
 ```python
 data_processor = DataProcessingKernel(...)  # supply step transformers implementations
